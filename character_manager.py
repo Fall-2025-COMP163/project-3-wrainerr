@@ -147,16 +147,23 @@ def load_character(character_name, save_directory="data/save_games"):
     
     try:
         for line in lines:
-            if ": " not in line:
+            # tolerate blank or malformed lines
+            if ":" not in line:
                 continue
-                
-            key, value = line.strip().split(": ", 1)
-            
-            if key in int_fields:
+
+            parts = line.split(":", 1)
+            if len(parts) < 2:
+                continue
+
+            key = parts[0].strip()
+            value = parts[1].strip()
+
+            key_upper = key.upper()
+            if key_upper in int_fields:
                 character[key.lower()] = int(value)
-            elif key in list_fields:
+            elif key_upper in list_fields:
                 if value:
-                    character[key.lower()] = value.split(",")
+                    character[key.lower()] = [v for v in value.split(",") if v]
                 else:
                     character[key.lower()] = []
             else:

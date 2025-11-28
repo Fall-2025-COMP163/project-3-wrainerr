@@ -117,13 +117,15 @@ def use_item(character, item_id, item_data):
         raise ItemNotFoundError(f"Item {item_id} not found.")
     
     if item_data['type'] != 'consumable':
-        raise InvalidItemTypeError(f"Item {item_data['name']} is not consumable.")
+        item_name = item_data.get('name', item_id)
+        raise InvalidItemTypeError(f"Item {item_name} is not consumable.")
     
     stat_name, value = parse_item_effect(item_data['effect'])
     apply_stat_effect(character, stat_name, value)
     
     character['inventory'].remove(item_id)
-    return f"Used {item_data['name']}."
+    item_name = item_data.get('name', item_id)
+    return f"Used {item_name}."
 
 def equip_weapon(character, item_id, item_data):
     """
@@ -149,7 +151,8 @@ def equip_weapon(character, item_id, item_data):
         raise ItemNotFoundError(f"Item {item_id} not found.")
     
     if item_data['type'] != 'weapon':
-        raise InvalidItemTypeError(f"Item {item_data['name']} is not a weapon.")
+        item_name = item_data.get('name', item_id)
+        raise InvalidItemTypeError(f"Item {item_name} is not a weapon.")
     
     if 'equipped_weapon' in character and character['equipped_weapon']:
         unequip_weapon(character)
@@ -161,7 +164,8 @@ def equip_weapon(character, item_id, item_data):
     character['equipped_weapon'] = item_id
     character['weapon_bonus'] = (stat_name, value)
     
-    return f"Equipped {item_data['name']}."
+    item_name = item_data.get('name', item_id)
+    return f"Equipped {item_name}."
 
 def equip_armor(character, item_id, item_data):
     """
@@ -187,7 +191,8 @@ def equip_armor(character, item_id, item_data):
         raise ItemNotFoundError(f"Item {item_id} not found.")
     
     if item_data['type'] != 'armor':
-        raise InvalidItemTypeError(f"Item {item_data['name']} is not armor.")
+        item_name = item_data.get('name', item_id)
+        raise InvalidItemTypeError(f"Item {item_name} is not armor.")
     
     if 'equipped_armor' in character and character['equipped_armor']:
         unequip_armor(character)
@@ -199,7 +204,8 @@ def equip_armor(character, item_id, item_data):
     character['equipped_armor'] = item_id
     character['armor_bonus'] = (stat_name, value)
     
-    return f"Equipped {item_data['name']}."
+    item_name = item_data.get('name', item_id)
+    return f"Equipped {item_name}."
 
 def unequip_weapon(character):
     """

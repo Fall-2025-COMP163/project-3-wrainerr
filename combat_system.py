@@ -113,7 +113,7 @@ class SimpleBattle:
                 if winner == 'player':
                     return get_victory_rewards(self.enemy)
                 else:
-                    return {'winner': 'enemy', 'xp_gained': 0, 'gold_gained': 0}
+                    return {'winner': 'enemy', 'xp': 0, 'gold': 0}
             
             self.enemy_turn()
             
@@ -122,9 +122,9 @@ class SimpleBattle:
                 if winner == 'player':
                     return get_victory_rewards(self.enemy)
                 else:
-                    return {'winner': 'enemy', 'xp_gained': 0, 'gold_gained': 0}
+                    return {'winner': 'enemy', 'xp': 0, 'gold': 0}
                     
-        return {'winner': 'escaped', 'xp_gained': 0, 'gold_gained': 0}
+        return {'winner': 'escaped', 'xp': 0, 'gold': 0}
     
     def player_turn(self):
         """
@@ -311,8 +311,8 @@ def get_victory_rewards(enemy):
     """
     return {
         'winner': 'player',
-        'xp_gained': enemy['xp_reward'],
-        'gold_gained': enemy['gold_reward']
+        'xp': enemy['xp_reward'],
+        'gold': enemy['gold_reward']
     }
 
 def display_combat_stats(character, enemy):
