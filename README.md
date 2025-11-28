@@ -1,151 +1,98 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/wnCpjX4n)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=21703061&assignment_repo_type=AssignmentRepo)
 # COMP 163: Project 3 - Quest Chronicles
 
-**AI Usage: Free Use (with explanation requirement)**
+[](https://classroom.github.com/a/wnCpjX4n)
+[](https://classroom.github.com/online_ide?assignment_repo_id=21703061&assignment_repo_type=AssignmentRepo)
+
+**Student Name:** Rayner Paulino-Payano
+**Section:** 6
 
 ## Overview
 
-Build a complete modular RPG adventure game demonstrating mastery of **exceptions and modules**.
+Quest Chronicles is a modular, text-based RPG adventure game. It demonstrates mastery of Python **Exceptions** and **Modules** by splitting game logic into distinct, manageable files. Players create a character, manage an inventory, complete quests, and battle enemies in a turn-based combat system.
 
-## Getting Started
-
-### Step 1: Accept Assignment
-1. Click the assignment link provided in Blackboard
-2. Accept the assignment - this creates your personal repository
-3. Clone your repository to your local machine:
-```bash
-git clone [your-personal-repo-url]
-cd [repository-name]
-```
-
-### Step 2: Understand the Project Structure
-
-Your repository contains:
+## Project Structure
 
 ```
 quest_chronicles/
-├── main.py                     # Game launcher (COMPLETE THIS)
-├── character_manager.py        # Character creation/management (COMPLETE THIS)
-├── inventory_system.py         # Item and equipment management (COMPLETE THIS)
-├── quest_handler.py            # Quest system (COMPLETE THIS)
-├── combat_system.py            # Battle mechanics (COMPLETE THIS)
-├── game_data.py                # Data loading and validation (COMPLETE THIS)
-├── custom_exceptions.py        # Exception definitions (PROVIDED)
+├── main.py                     # Game launcher & main loop
+├── character_manager.py        # Character creation, saving, and loading
+├── inventory_system.py         # Item management, equipment, and shop
+├── quest_handler.py            # Quest tracking and validation
+├── combat_system.py            # Turn-based battle mechanics
+├── game_data.py                # Data loading (IO) and validation
+├── custom_exceptions.py        # Centralized exception definitions
 ├── data/
-│   ├── quests.txt             # Quest definitions (PROVIDED)
-│   ├── items.txt              # Item database (PROVIDED)
-│   └── save_games/            # Player save files (created automatically)
-├── tests/
-│   ├── test_module_structure.py       # Module organization tests
-│   ├── test_exception_handling.py     # Exception handling tests
-│   └── test_game_integration.py       # Integration tests
-└── README.md                   # This file
+│   ├── quests.txt              # Quest database
+│   ├── items.txt               # Item database
+│   └── save_games/             # User save files
+└── README.md                   # Project documentation
 ```
 
-### Step 3: Development Workflow
+## How to Play
 
-```bash
-# Work on one module at a time
-# Test your code frequently
+1.  **Setup:** Ensure you have Python 3 installed.
 
-# Commit and push to see test results
-git add .
-git commit -m "Implement character_manager module"
-git push origin main
+2.  **Launch:** Run the game from the terminal:
 
-# Check GitHub for test results (green checkmarks = passed!, red xs = at least 1 failed test case. Click the checkmark or x and then "Details" to see what test cases passed/failed)
-```
+    ```bash
+    python main.py
+    ```
 
-## Core Requirements (60 Points)
+    *(Note: If the `data/` folder is missing, the game will automatically create default data files on the first run.)*
 
-### Critical Constraint
-You may **only** use concepts covered through the **Exceptions and Modules** chapters. 
+3.  **Gameplay:**
 
-### 🎨 Creativity and Customization
+      * **New Game:** Select a name and class (Warrior, Mage, Rogue, Cleric).
+      * **Main Menu:**
+          * **View Stats:** Check your health, gold, and XP.
+          * **Inventory:** Equip weapons/armor or use potions.
+          * **Quests:** Accept new quests or view progress.
+          * **Explore:** Engage in combat to earn XP and Gold.
+          * **Shop:** Buy better gear or sell loot.
+          * **Save & Quit:** Saves your progress to `data/save_games/`.
 
-This project encourages creativity! Here's what you can customize:
+## Module Architecture
 
-**✅ FULLY CUSTOMIZABLE:**
-- **Character stats** - Adjust health, strength, magic for balance
-- **Enemy stats** - Make enemies easier or harder
-- **Special abilities** - Design unique abilities for each class
-- **Additional enemies** - Add your own enemy types beyond the required three
-- **Game mechanics** - Add status effects, combos, critical hits, etc.
-- **Quest rewards** - Adjust XP and gold amounts
-- **Item effects** - Create unique items with creative effects
+The project is organized into focused modules to separate concerns:
 
-**⚠️ REQUIRED (for testing):**
-- **4 Character classes:** Warrior, Mage, Rogue, Cleric (names must match exactly)
-- **3 Enemy types:** "goblin", "orc", "dragon" (must exist, stats flexible)
-- **All module functions** - Must have the specified function signatures
-- **Exception handling** - Must raise appropriate exceptions
+  * **`main.py`**: The entry point. It handles the high-level game loop, user input for menus, and coordinates the flow between other modules.
+  * **`character_manager.py`**: Handles the lifecycle of the character dictionary. It contains logic for creating new characters (with class-specific stats), saving them to text files, and parsing those files back into Python dictionaries.
+  * **`inventory_system.py`**: Manages the list of items held by the player. It handles logic for ensuring the inventory doesn't exceed capacity, applying stat effects from consumables, and calculating stat bonuses when equipping/unequipping weapons and armor.
+  * **`quest_handler.py`**: manages the state of quests. It validates if a user *can* accept a quest (level requirements, prerequisites) and handles the transition of quests from "Active" to "Completed" while awarding XP/Gold.
+  * **`combat_system.py`**: Contains the logic for the battle loop. It generates enemies based on player level, calculates damage based on stats, and manages the turn-based flow until victory or defeat.
+  * **`game_data.py`**: The Data Access Layer. It is responsible for reading `quests.txt` and `items.txt`, parsing the specific file formats, and validating that the loaded data contains all required fields.
+  * **`custom_exceptions.py`**: Contains no logic, only class definitions for custom errors (e.g., `InventoryFullError`, `CharacterDeadError`).
 
-**💡 CREATIVITY TIPS:**
-1. Start with required features working
-2. Add creative elements incrementally
-3. Test after each addition
-4. Be ready to explain your design choices in the interview
-5. Bonus interview points for thoughtful, balanced customization!
+## Exception Strategy
 
-**Example Creative Additions:**
-- Vampire enemy that heals when attacking
-- Warrior "Last Stand" ability that activates when health is low
-- Poison status effect that deals damage over time
-- Critical hit system based on character stats
-- Rare "legendary" weapons with special effects
+The game uses a robust hierarchy of custom exceptions defined in `custom_exceptions.py`. This allows the main game loop to handle specific errors gracefully without crashing.
 
-### Module 1: custom_exceptions.py (PROVIDED - 0 points to implement)
+  * **Data Loading:** `game_data.py` raises `MissingDataFileError` or `CorruptedDataError` if game files are absent or unreadable. `InvalidDataFormatError` is raised if specific fields (like `cost` or `damage`) are missing or are the wrong data type.
+  * **Game Logic:**
+      * **Inventory:** `InventoryFullError` prevents picking up items when capacity is reached. `InsufficientResourcesError` is raised by the shop if the player lacks gold.
+      * **Combat:** `CharacterDeadError` is raised when health hits 0, triggering the "Game Over" or "Revive" logic in `main.py`. `CombatNotActiveError` prevents combat actions (like attacking) outside of battle.
+      * **Quests:** `QuestRequirementsNotMetError` ensures players cannot skip prerequisites or level requirements.
 
-**This module is provided complete.** It defines all custom exceptions you'll use throughout the project.
+## Design Choices
 
-### Module 2: game_data.py (10 points)
+1.  **Dictionaries for Entities:** Instead of using Python Classes for Characters and Enemies, this project uses Dictionaries. This adheres to the strict requirement of using only Modules and Exceptions concepts. It also makes serialization (saving to text) straightforward.
+2.  **Text-Based Save Format:** Save files use a human-readable `KEY: VALUE` format (e.g., `HEALTH: 100`). This makes debugging easier and allows the save files to be edited manually if needed for testing.
+3.  **Dynamic Parsing:** The `game_data` module is designed to be resilient. It splits file content by blank lines to separate entries, allowing for easy expansion of the `items.txt` and `quests.txt` databases without changing code.
+4.  **Modular dependencies:** `main.py` imports everything, but the sub-modules (like `inventory` or `combat`) are kept relatively independent, making unit testing significantly easier.
 
-### Module 3: character_manager.py (15 points)
+## AI Usage
 
-### Module 4: inventory_system.py (10 points)
+**AI Tool Used:** Google Gemini (Large Language Model)
 
-### Module 5: quest_handler.py (10 points)
+**Usage Description:**
+I utilized AI as a "pair programmer" to assist with the implementation of the module logic based on the provided starter docstrings.
 
-### Module 6: combat_system.py (10 points)
+1.  **Code Generation:** I provided the docstrings and function signatures to the AI, and it generated the implementation logic for the core modules (`character_manager`, `inventory_system`, etc.).
+2.  **Refactoring:** I used the AI to refine the `save_character` function to ensure file paths were handled safely using `os.path.join`.
+3.  **Debugging:** The AI helped identify that `inventory` lists needed to be converted to strings before being written to the save file to prevent `TypeError` during the `.join()` operation.
 
-### Module 7: main.py (5 points)
+## Creativity & Customization
 
-## Automated Testing & Validation (60 Points)
-
-## Interview Component (40 Points)
-
-**Creativity Bonus** (up to 5 extra points on interview):
-- Added 2+ custom enemy types beyond required three
-- Designed unique and balanced special abilities
-- Implemented creative game mechanics (status effects, advanced combat, etc.)
-- Thoughtful stat balancing with clear reasoning
-
-**Note:** Creativity is encouraged, but functionality comes first! A working game with required features scores higher than a broken game with lots of extras.
-
-### Update README.md
-
-Document your project with:
-
-1. **Module Architecture:** Explain your module organization
-2. **Exception Strategy:** Describe when/why you raise specific exceptions
-3. **Design Choices:** Justify major decisions
-4. **AI Usage:** Detail what AI assistance you used
-5. **How to Play:** Instructions for running the game
-
-### What to Submit:
-
-1. **GitHub Repository:** Your completed multi-module project
-2. **Interview:** Complete 10-minute explanation session
-3. **README:** Updated documentation
-
-## Protected Files Warning
-
-⚠️ **IMPORTANT: Test Integrity**
-
-Test files are provided for your learning but are protected. Modifying test files constitutes academic dishonesty and will result in:
-
-- Automatic zero on the project
-- Academic integrity investigation
-
-You can view tests to understand requirements, but any modifications will be automatically detected.
+  * **Class Balance:** Adjusted the starting stats for the `Mage` and `Cleric` to make early-game combat more survivable.
+  * **Stat Calculation:** Implemented a damage formula in `combat_system` that scales based on the enemy's strength vs. the player's defense (derived from strength).
+  * **Fail-safes:** Added a `create_default_data_files` function in `game_data.py` to ensure the game is playable immediately after cloning, even if data files are missing.

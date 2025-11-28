@@ -4,7 +4,8 @@ Quest Handler Module - Starter Code
 
 Name: Rayner Paulino-Payano
 
-AI Usage: [Document any AI assistance used]
+AI Usage: AI Used to handle missing item names, normalize combat reward keys,
+and make save-file parsing more robust.
 
 This module handles quest management, dependencies, and completion.
 """
